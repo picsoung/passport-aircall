@@ -1,25 +1,25 @@
 {
-  "name": "passport-typeform",
-  "version": "0.0.7",
-  "description": "Typeform authentication strategy for Passport.",
+  "name": "passport-aircall",
+  "version": "0.0.1",
+  "description": "Aircall authentication strategy for Passport.",
   "keywords": [
     "passport",
-    "typeform",
+    "aircall",
     "auth",
     "authn",
     "authentication",
     "identity"
   ],
   "author": {
-    "name": "Anabella Spinelli",
-    "email": "anabellaspinelli@gmail.com"
+    "name": "Nicolas Grenié",
+    "email": "nicolas.grenie@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/anabellaspinelli/passport-typeform.git"
+    "url": "https://github.com/picsoung/passport-aircall.git"
   },
   "bugs": {
-    "url": "http://github.com/anabellaspinelli/passport-typeform/issues"
+    "url": "http://github.com/picsoung/passport-aircall/issues"
   },
   "license": "MIT",
   "licenses": [
