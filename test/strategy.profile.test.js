@@ -1,29 +1,28 @@
 /* global describe, it, before, expect */
 /* jshint expr: true */
 
-var TypeformStrategy = require('../lib/strategy')
+var AircallStrategy = require('../lib/strategy')
 
 describe('Strategy#userProfile', function () {
   describe('fetched from default endpoint', function () {
-    var strategy = new TypeformStrategy(
+    var strategy = new AircallStrategy(
       {
         clientID: 'ABC123',
         clientSecret: 'secret',
-        scope: [ 'accounts:read' ]
+        scope: [ 'public_api' ]
       },
       function () { }
     )
 
     strategy._oauth2.get = function (url, accessToken, callback) {
-      if (url != 'https://api.typeform.com/me') {
+      if (url != 'https://api.aircall.io/v1/company') {
         return callback(new Error('wrong url argument'))
       }
       if (accessToken != 'token') {
         return callback(new Error('wrong token argument'))
       }
 
-      var body =
-        '{ "alias": "beardyman", "language": "en", "email": "beardy@typeform.com" }'
+      var body = '{"company":{"name":"BeardyCompany","users_count":2,"numbers_count":1}}'
       callback(null, body, undefined)
     }
 
@@ -40,11 +39,11 @@ describe('Strategy#userProfile', function () {
     })
 
     it('should parse profile', function () {
-      expect(profile.provider).to.equal('typeform')
+      expect(profile.provider).to.equal('aircall')
 
-      expect(profile.email).to.equal('beardy@typeform.com')
-      expect(profile.language).to.equal('en')
-      expect(profile.alias).to.equal('beardyman')
+      expect(profile.company_name).to.equal('BeardyCompany')
+      // expect(profile.language).to.equal('en')
+      // expect(profile.alias).to.equal('beardyman')
     })
 
     it('should set raw property', function () {
@@ -57,7 +56,7 @@ describe('Strategy#userProfile', function () {
   }) // fetched from default endpoint
 
   describe('fetched without account scope', function () {
-    var strategy = new TypeformStrategy(
+    var strategy = new AircallStrategy(
       {
         clientID: 'ABC123',
         clientSecret: 'secret'
@@ -86,7 +85,7 @@ describe('Strategy#userProfile', function () {
   }) // fetched from default endpoint
 
   describe('error caused by invalid token', function () {
-    var strategy = new TypeformStrategy(
+    var strategy = new AircallStrategy(
       {
         clientID: 'ABC123',
         clientSecret: 'secret',
@@ -97,8 +96,8 @@ describe('Strategy#userProfile', function () {
 
     strategy._oauth2.get = function (url, accessToken, callback) {
       var body =
-        '{"message":"Bad credentials","documentation_url":"https://developer.typeform.com"}'
-      callback({ statusCode: 403, data: body })
+        '{"error":"invalid_request","error_description":"The request is missing a required parameter, includes an unsupported parameter value, or is otherwise malformed."}'
+      callback({ statusCode: 401, data: body })
     }
 
     var err, profile
@@ -113,16 +112,17 @@ describe('Strategy#userProfile', function () {
     it('should error', function () {
       expect(err).to.be.an.instanceOf(Error)
       expect(err.constructor.name).to.equal('APIError')
-      expect(err.message).to.equal('Bad credentials')
+      expect(err.error_code).to.equal('invalid_request')
+      expect(err.description).to.equal('The request is missing a required parameter, includes an unsupported parameter value, or is otherwise malformed.')
     })
   }) // error caused by invalid token
 
   describe('error caused by malformed response', function () {
-    var strategy = new TypeformStrategy(
+    var strategy = new AircallStrategy(
       {
         clientID: 'ABC123',
         clientSecret: 'secret',
-        scope: [ 'accounts:read' ]
+        scope: [ 'public_api' ]
       },
       function () { }
     )
@@ -148,11 +148,11 @@ describe('Strategy#userProfile', function () {
   }) // error caused by malformed response
 
   describe('internal error', function () {
-    var strategy = new TypeformStrategy(
+    var strategy = new AircallStrategy(
       {
         clientID: 'ABC123',
         clientSecret: 'secret',
-        scope: [ 'accounts:read' ]
+        scope: [ 'public_api' ]
       },
       function () { }
     )

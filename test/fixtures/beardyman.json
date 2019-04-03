@@ -1,5 +1,7 @@
 {
-  "alias": "beardyman",
-  "email": "beardy@typeform.com",
-  "language": "en"
+  "company": {
+    "name": "BeardyCompany",
+    "users_count": 2,
+    "numbers_count": 1
+  }
 }

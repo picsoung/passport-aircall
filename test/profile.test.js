@@ -18,9 +18,10 @@ describe('Profile.parse', function () {
     })
 
     it('should parse profile', function () {
-      expect(profile.email).to.equal('beardy@typeform.com')
-      expect(profile.language).to.equal('en')
-      expect(profile.alias).to.equal('beardyman')
+      expect(profile.company_name).to.equal('BeardyCompany')
+      // expect(profile.email).to.equal('beardy@typeform.com')
+      // expect(profile.language).to.equal('en')
+      // expect(profile.alias).to.equal('beardyman')
     })
   })
 })

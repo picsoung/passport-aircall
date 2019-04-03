@@ -7,34 +7,34 @@ var $require = require('proxyquire'),
   path = require('path'),
   fs = require('fs'),
   existsSync = fs.existsSync || path.existsSync, // node <=0.6
-  GitHubStrategy = require('../lib/strategy')
+  AircallStrategy = require('../lib/strategy')
 
 describe('Strategy', function () {
   describe('constructed', function () {
-    var strategy = new GitHubStrategy(
+    var strategy = new AircallStrategy(
       {
         clientID: 'ABC123',
         clientSecret: 'secret',
-        scope: ['accounts:read']
+        scope: ['public_api']
       },
       function () {}
     )
 
-    it('should be named typeform', function () {
-      expect(strategy.name).to.equal('typeform')
+    it('should be named aircall', function () {
+      expect(strategy.name).to.equal('aircall')
     })
   })
 
   describe('constructed with undefined options', function () {
     it('should throw', function () {
       expect(function () {
-        var strategy = new GitHubStrategy(undefined, function () {})
+        var strategy = new AircallStrategy(undefined, function () {})
       }).to.throw(Error)
     })
   })
 
   describe('constructed with customHeaders option, including User-Agent field', function () {
-    var strategy = new GitHubStrategy(
+    var strategy = new AircallStrategy(
       {
         clientID: 'ABC123',
         clientSecret: 'secret',
@@ -51,7 +51,7 @@ describe('Strategy', function () {
   })
 
   describe('constructed with userAgent option', function () {
-    var strategy = new GitHubStrategy(
+    var strategy = new AircallStrategy(
       {
         clientID: 'ABC123',
         clientSecret: 'secret',
@@ -68,7 +68,7 @@ describe('Strategy', function () {
   })
 
   describe('constructed with both customHeaders option, including User-Agent field, and userAgent option', function () {
-    var strategy = new GitHubStrategy(
+    var strategy = new AircallStrategy(
       {
         clientID: 'ABC123',
         clientSecret: 'secret',
@@ -113,6 +113,7 @@ describe('Strategy', function () {
 
         return callback(null, 's3cr1t-t0k3n', undefined, {})
       }
+      //TODO fix this test to fit aircall
       this._oauth2.get = function (url, accessToken, callback) {
         if (url != 'https://api.github.com/user') {
           return callback(new Error('wrong url argument'))
@@ -128,11 +129,11 @@ describe('Strategy', function () {
     }
     util.inherits(MockOAuth2Strategy, OAuth2Strategy)
 
-    var GitHubStrategy = $require('../lib/strategy', {
+    var AircallStrategy = $require('../lib/strategy', {
       'passport-oauth2': MockOAuth2Strategy
     })
 
-    var strategy = new GitHubStrategy(
+    var strategy = new AircallStrategy(
       {
         clientID: 'ABC123',
         clientSecret: 'secret'
