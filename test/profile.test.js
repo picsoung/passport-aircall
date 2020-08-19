@@ -4,7 +4,7 @@
 var Profile = require('../lib/profile'), fs = require('fs')
 
 describe('Profile.parse', function () {
-  describe('profile obtained from /me endpoint', function () {
+  describe('profile obtained from /company endpoint', function () {
     var profile
 
     before(function (done) {
@@ -19,9 +19,6 @@ describe('Profile.parse', function () {
 
     it('should parse profile', function () {
       expect(profile.company_name).to.equal('BeardyCompany')
-      // expect(profile.email).to.equal('beardy@typeform.com')
-      // expect(profile.language).to.equal('en')
-      // expect(profile.alias).to.equal('beardyman')
     })
   })
 })
