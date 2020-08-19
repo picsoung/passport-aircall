@@ -28,7 +28,7 @@ configure a callback URL which matches a route in your application.
 
 #### Configure Strategy
 
-The Aircal authentication strategy authenticates companies using an Aircall account
+The Aircall authentication strategy authenticates companies using an Aircall account
 and OAuth 2.0 tokens. The `client_id` and `client_secret` obtained before
 are supplied as options when creating the strategy. The strategy
 also requires a `verify` callback, which receives the access token and optional
