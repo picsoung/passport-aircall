@@ -1,6 +1,6 @@
 {
   "name": "passport-aircall",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Aircall authentication strategy for Passport.",
   "keywords": [
     "passport",
